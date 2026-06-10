@@ -1,0 +1,769 @@
+DUOC UC - Escuela de informática y telecomunicaciones
+Propuesta de Proyecto       y Especificación de Requisitos de Software
+Frontera Ágil
+Revisión: [01]
+[Seleccionar fecha]
+Planificación y Especificación de Requisitos según estándares; IEEE 830, ISO9000 y PMI.
+Contenido
+Ficha del documento3
+1.  Introducción4
+1.1.Propósito4
+1.2.Ámbito del Sistema4
+1.3.Definiciones, Acrónimos y Abreviaturas4
+1.4.Referencias4
+1.5.Visión General del Documento4
+2.Descripción General5
+2.1.Perspectiva del Producto5
+2.2.Funciones del Producto5
+2.3.Características de los Usuarios5
+2.4.Restricciones5
+2.5.Suposiciones y Dependencias6
+2.6.Requisitos Futuros6
+3.Requisitos Específicos7
+3.1Requisitos comunes de las interfaces8
+3.1.1Interfaces de usuario8
+3.1.2Interfaces de hardware8
+3.1.3Interfaces de software8
+3.1.4Interfaces de comunicación8
+3.2Requisitos funcionales8
+3.3Requisitos no funcionales9
+3.3.1Requisitos de rendimiento9
+3.3.2Seguridad9
+3.3.3Fiabilidad10
+3.3.4Disponibilidad10
+3.3.5Mantenibilidad10
+3.3.6Portabilidad10
+3.4Otros Requisitos10
+4. Propuesta de Planificación11
+4.1 Descripción general acerca de la Planificación11
+4.1.2 Definición del Equipo de Trabajo11
+4.1.3 Definición de Actividades principales del Proyecto11
+4.1.4 Diagrama EDT11
+4.1.5 Carta Gantt11
+4.1.6 Resumen Costos del Desarrollo del Proyecto11
+4.2 Plan de Control de Cambio12
+5.  Anexos12
+5.1 Acta de Proyecto12
+5.2 Matriz Especificación de Requerimientos12
+5.3 Diagrama de Casos de Uso General12
+5.4 Planilla Casos de Uso12
+5.5 Prototipado de Software13
+5.6 Resultado Análisis de Calidad Diagramas Modelamiento13
+5.7 Resultado Análisis de Calidad Prototipado No funcional del Sistema13
+5.8 Planilla entregables del Proyecto13
+5.9 Matriz de Control de Cambios13
+5.10 Matriz EDT. Planilla Detallada Cálculo de Esfuerzo13
+Ficha del documento
+Fecha
+Revisión
+Autor
+Modificación
+11/03
+13/05
+Documento validado por las partes en fecha:
+Integrantes:
+Nombre Integrante del Equipo
+Rol Definido
+Leonard Hernández
+Santiago Villaroel
+Julian Naranjo
+Introducción
+1.1.Propósito
+El propósito principal del proyecto es desarrollar un sistema informático que modernice y agilice los procesos del Servicio Nacional de Aduanas en los pasos fronterizos terrestres.
+Este objetivo se desglosa en los siguientes puntos clave según las fuentes:
+Reducción de tiempos de espera: El fin último es bajar las esperas de los pasajeros y turistas, las cuales actualmente oscilan entre 8 y 20 horas, situación que desincentiva el cruce por vía terrestre.
+Automatización documental: El proyecto busca automatizar la gestión de documentos críticos, específicamente para la entrada y salida de menores de edad y la completitud de datos para vehículos motorizados.
+Integración institucional y binacional: Se pretende integrar los sistemas de información con las aduanas de países limítrofes y coordinar de manera automatizada los procesos de revisión de otros organismos como la PDI y el SAG.
+Inteligencia y fiscalización: El sistema debe ser capaz de generar informes estadísticos automatizados para mejorar la capacidad de procesamiento inteligente de la información y fortalecer la fiscalización basada en el riesgo.
+Alineación estratégica: Todo lo anterior responde a la misión institucional de facilitar el comercio exterior y proteger al país y a las personas mediante un servicio de calidad e innovador
+1.2.Ámbito del Sistema
+El Ámbito del Sistema propuesto se circunscribe a la modernización y automatización de los procesos de control en los pasos aduaneros terrestres, con el fin específico de reducir los tiempos de espera que actualmente alcanzan hasta 20 horas.
+1. Gestión Documental Automatizada
+El sistema se encargará de la tramitación digital de documentos críticos que hoy generan retrasos en ventanilla:
+Menores de edad: Control de entrada y salida, incluyendo la validación de cédulas, pasaportes y autorizaciones notariales o judiciales necesarias cuando no viajan con ambos padres.
+Vehículos motorizados: Automatización de la "Salida y Admisión Temporal de Vehículos" (especialmente bajo el Acuerdo Chileno-Argentino), permitiendo la completitud de datos de forma informática para evitar el llenado manual en frontera.
+2. Integración Institucional e Internacional
+El ámbito del sistema no es aislado, sino que actúa como un núcleo de comunicación entre diversas entidades:
+Organismos Nacionales: Automatización y control de los procesos de revisión que realizan el SAG (declaraciones juradas de productos y mascotas) y la PDI.
+Cooperación Internacional: Integración bidireccional con los sistemas de las aduanas de países limítrofes para el intercambio de información y datos, optimizando el reconocimiento de documentos emitidos en el extranjero.
+3. Inteligencia de Datos y Reportabilidad
+El sistema trasciende la operación inmediata para ofrecer herramientas de gestión:
+Generación de informes estadísticos automatizados sobre el flujo de personas y vehículos.
+Capacidad de exportar reportes en formatos estándar como PDF o Excel para el análisis de la gestión aduanera.
+4. Límites Operativos y de Seguridad
+El entorno de aplicación del software debe cumplir con estándares estrictos:
+Seguridad: Garantizar la confidencialidad absoluta de la información y restringir el acceso únicamente a usuarios con cuentas habilitadas.
+Usabilidad: Debe ser una plataforma muy intuitiva debido a la multiplicidad de usuarios (turistas, transportistas, funcionarios) y ofrecer respuestas eficientes a las consultas.
+Identidad Corporativa: El diseño debe respetar los colores institucionales del Servicio Nacional de Aduanas.
+En resumen, el ámbito abarca desde la interfaz del usuario final (pasajero) hasta la interconexión sistémica con organismos de control y aduanas extranjeras, siempre enfocado en el despacho aduanero documental automatizado en fronteras terrestres.
+1.3.Definiciones, Acrónimos y Abreviaturas
+Definiciones
+Aduanas: Organismo del Estado de administración autónoma encargado de fiscalizar y facilitar el comercio exterior, resguardando los intereses del Estado y recaudando impuestos vinculados a operaciones de importación y exportación.
+Admisión Temporal: Proceso legal que ampara el ingreso de vehículos particulares extranjeros a Chile (procedentes de Argentina) por un plazo de 180 días.
+Salida Temporal: Trámite que formaliza la salida de vehículos particulares nacionales hacia Argentina con fines turísticos, bajo el "Acuerdo Chileno-Argentino".
+Declaración Jurada (SAG): Formulario obligatorio donde toda persona que ingresa a Chile debe indicar si porta productos animales, vegetales o subproductos que puedan estar prohibidos.
+Autorización Notarial: Documento legal requerido para que menores de 18 años salgan del país cuando viajan solos o con solo uno de sus padres.
+Juzgado de Familia: Instancia judicial a la que se debe recurrir para obtener la autorización de viaje de un menor en caso de que uno de los padres se niegue a otorgarla.
+Sistema Integrado: Modelo operativo (como el de Los Libertadores/Horcones) donde los trámites de Aduana y Migraciones de dos países se realizan en un solo complejo fronterizo.
+Despacho Aduanero: Operación de control, tanto físico como documental, de las mercancías y personas que cruzan la frontera.
+Acrónimos y Abreviaturas
+SNA: Servicio Nacional de Aduanas.
+PDI: Policía de Investigaciones (encargada del control migratorio).
+SAG: Servicio Agrícola y Ganadero (encargado de la protección fitosanitaria y de mascotas).
+C.D. / CC / O.I. / P.A.T.: Siglas utilizadas en las placas de gracia de vehículos de funcionarios diplomáticos extranjeros (Cuerpo Diplomático, Cuerpo Consular, Organismos Internacionales, etc.).
+1.4.Referencias
+Servicio Nacional de Aduanas de Chile. Funciones y normativa del organismo.
+Gobierno de Chile. Regulación del comercio exterior y procesos aduaneros.
+Servicio Nacional de Aduanas de Chile. Ingreso de vehículos extranjeros (Admisión Temporal).
+Servicio Agrícola y Ganadero (SAG). Declaración Jurada de ingreso a Chile y normativa fitosanitaria.
+Servicio Nacional de Aduanas de Chile. Salida temporal de vehículos hacia el extranjero.
+Gobierno de Chile. Requisitos para la salida de menores de edad del país.
+Servicio Agrícola y Ganadero (SAG). Control de productos de origen animal y vegetal.
+Poder Judicial de Chile. Procedimientos del Juzgado de Familia para autorización de salida de menores.
+Complejo Fronterizo Los Libertadores. Modelo de sistema integrado Chile–Argentina.
+Policía de Investigaciones de Chile (PDI). Control migratorio en pasos fronterizos.
+Servicio Nacional de Aduanas de Chile. Procedimientos de despacho aduanero.
+Normativa chilena vigente sobre control de mercancías en frontera.
+1.5.Visión General del Documento
+Contexto y Propósito: Se define al Servicio Nacional de Aduanas como el organismo responsable, estableciendo como objetivo principal la reducción de los tiempos de espera en frontera.
+Alcance y Funcionalidades: Se consideran procesos de automatización documental para menores de edad y vehículos, junto con la integración con instituciones como la PDI, el SAG y entidades extranjeras.
+Calidad y Seguridad: Se establecen requisitos de confidencialidad, tiempos de respuesta eficientes y una interfaz clara para el usuario.
+Reglas de Negocio: Se incorporan normativas legales vigentes relacionadas con el tránsito de personas y bienes.
+Objetivos Estratégicos: Se busca fortalecer la facilitación del comercio, la fiscalización y la modernización del Estado.
+2.Descripción General
+El sistema "Aduana Digital de Alta Velocidad" es una solución tecnológica diseñada para modernizar el control fronterizo, reduciendo los tiempos de espera de horas a minutos mediante la automatización. Su función principal es centralizar la interoperabilidad en tiempo real entre el Servicio Nacional de Aduanas, PDI, SAG y el Registro Civil, permitiendo una fiscalización inteligente y segura. A través de una interfaz intuitiva y conexiones cifradas con la Aduana Argentina, el proyecto optimiza la verificación migratoria y documental, garantizando un tránsito internacional ágil, transparente y libre de errores manuales.
+2.1.Perspectiva del Producto
+Desde la perspectiva arquitectónica, Frontera Ágil se modela mediante el patrón de vistas 4+1. La vista lógica se representa con el diagrama de clases; la vista de desarrollo con el diagrama de componentes; la vista física con el diagrama de despliegue; la vista de procesos con el diagrama de actividades; y la vista de escenarios con el diagrama de casos de uso general. Esta estructura permite relacionar requisitos, módulos, flujos e infraestructura sin mezclar responsabilidades de análisis y diseño.
+El sistema Aduana Digital es una plataforma de interoperabilidad de misión crítica que actúa como núcleo central entre el Servicio Nacional de Aduanas, el Registro Civil, PDI, SAG y la Aduana Argentina. Su función es automatizar la validación de identidad y situación migratoria en tiempo real, transformando procesos manuales de horas en trámites digitales de pocos minutos. No es una aplicación aislada, sino un ecosistema integrado que utiliza conexiones seguras para garantizar un flujo fronterizo ágil, confiable y libre de errores.
+2.2.Funciones del Producto
+Las funciones del producto se vinculan directamente con los anexos técnicos del ERS. Como se observa en el Anexo 5.3, los actores principales interactúan con autenticación, expediente digital, permisos, declaración SAG, registro vehicular, pase QR y control en caseta. El Anexo 5.8 organiza estas funciones en componentes de software; el Anexo 5.9 muestra su despliegue físico; y el Anexo 5.10 representa el flujo operativo completo de validación y autorización fronteriza.
+El sistema automatiza la validación de identidad mediante el Registro Civil, gestiona declaraciones obligatorias de salud y mascotas con el SAG, y verifica permisos de menores con la PDI. Su función central es consolidar estos trámites en una plataforma única que envía confirmaciones inmediatas a los fiscalizadores, eliminando filas y centralizando el control con la Aduana Argentina en una sola operación digital.
+2.3.Características de los Usuarios
+El producto está dirigido a dos perfiles principales: el viajero común, con diversos niveles de educación y experiencia técnica, quien requiere una interfaz intuitiva para autogestionar sus trámites; y el fiscalizador de aduanas, un usuario experto con formación técnica que utiliza el sistema para la toma de decisiones críticas y la generación de reportes detallados en formatos PDF o Excel.
+2.4.Restricciones
+La Seguridad (y privacidad de datos): Es la más crítica porque estamos hablando de un sistema de control fronterizo gubernamental. Un fallo aquí no solo es un error de código, es un riesgo de seguridad nacional. Si el sistema es vulnerable, personas no autorizadas o con antecedentes podrían ingresar al país, o se podrían filtrar datos confidenciales de millones de ciudadanos y viajeros. Por eso el doble factor y la encriptación son innegociables.
+Las Interfaces Externas (Interoperabilidad): Es la segunda más importante porque es el "corazón" de tu proyecto. El objetivo principal de tu software es reducir las horas de espera. Si el sistema no logra comunicarse de manera perfecta y en tiempo real con el Registro Civil, la PDI o el SAG, el proyecto simplemente fracasa y no cumple su objetivo de negocio.
+2.5.Suposiciones y Dependencias
+El correcto funcionamiento del sistema depende de la estabilidad de las redes de comunicación en pasos fronterizos y del acceso ininterrumpido a las bases de datos del Registro Civil, PDI y SAG. Se asume que cualquier cambio en la estructura organizacional de estas instituciones o en los protocolos de la Aduana Argentina requerirá una revisión y ajuste inmediato de los requisitos técnicos del software.
+2.6.Requisitos Futuros
+Se proyecta la evolución del sistema hacia el uso de biometría avanzada (reconocimiento facial) y la implementación de algoritmos de Inteligencia Artificial para la detección preventiva de perfiles de riesgo. Estas mejoras permitirán automatizar aún más el proceso de fiscalización, adaptándose a nuevas normativas internacionales de seguridad y comercio exterior.
+3.Requisitos Específicos
+3.1Requisitos comunes de las interfaces
+3.1.1Interfaces de usuario
+El sistema debe mantener en su diseño los colores característicos del Servicio Nacional de Aduanas para mantener su identidad gráfica.
+En los módulos destinados a la generación de reportes, el sistema debe mostrar de manera clara el formato en el que el usuario puede  descargar el reporte  ya sea PDF o Excel.
+A lo largo de todo el sistema deben existir botones de ayuda. Donde el usuario podrá consultar en caso de que se le genere alguna duda durante su proceso.
+El primer punto de contacto entre el sistema y el usuario debe ser una pantalla de inicio de sesión, dado que sólo podrán ingresar los usuarios que poseen una cuenta habilitada en el sistema.
+Debido a la diversidad de usuarios que utilizarán el sistema. Debe tener un diseño muy, muy interactivo y una navegación clara, para que cualquier persona pueda. completar sus trámites de manera rápida y sencilla.
+3.1.2Interfaces de hardware
+El sistema se va comunicar  frecuentemente con el hardware de red institucional, como routers y cortafuegos que deben estar configurados con balanceadores de carga para manejar de forma eficiente el tráfico de datos masivo a través de los puertos seguros,con esta me medida se asegurará que los servidores tengan la potencia necesaria para no saturarse ni ponerse lentos durante la temporada alta, cuando miles de turistas consultan la plataforma simultáneamente.
+Para que los usuarios realicen sus trámites de forma remota, el sistema deberá tener los permisos necesarios para acceder a la cámara y al sistema de archivos local del teléfono o computador, esto le permitirá permitirá al usuario  tomar una fotografía de un poder notarial o seleccionar un archivo PDF desde su galería para subirlo al sistema.
+El sistema usará escáneres bidimensionales que leerán código de barras en el documento de identidad  mediante tokens para ingresar los datos por emulación de teclado recopilando la información del usuario sin tener que hacerlo a mano.
+El sistema utilizará el teléfono del usuario como un dispositivo de validación externa. Técnicamente, la plataforma enviará un enlace transaccional al correo configurado en el hardware móvil del pasajero para procesar su firma electrónica. Explicado de forma sencilla, tras escanear el carnet en la frontera, la persona recibe un correo en su celular donde aprueba y firma los documentos, completando la doble autenticación desde su propia pantalla.
+3.1.3Interfaces de software
+El sistema se integrará con la plataforma del Registro Civil  para validar la identidad del usuario y  asegurarse de que solo los usuarios que ingresen al sistema su situación migratoria  sea legalmente válida puedan realizar trámites delicados. Para esto, el sistema pide autorización y recibe los datos del usuario que se envían a través de canales web protegidos para proteger la información del usuario.
+El sistema se conectará con el Sistema de Control Migratorio de la Policía de Investigaciones, con esto se automatiza la revisión de identidad en la frontera y comprobar electrónicamente que los permisos de menores sean válidos.
+El sistema se enlazará con la plataforma de Fiscalización del Servicio Agrícola y Ganadero, con el objetivo de centralizar las declaraciones obligatorias para ingresar alimentos o mascotas, nuestra plataforma mandará los datos del viajero y su formulario sanitario, recibiendo una confirmación inmediata. Esta respuesta se mostrará directo en las pantallas de los fiscalizadores, evitando que el turista haga filas extra.
+El sistema se conectará con el sistema informático de la aduana Argentina, para generar el documento de salida temporal de vehículos, el sistema enviará la patente y el documento de identidad del usuario mediante un canal exclusivo entre ambos países, al compartir esta información se puede validar el cruce del vehículo reduciendo los tiempos de espera.
+3.1.4Interfaces de comunicación
+Los dispositivos del usuario se comunicaran con el sistema de forma segura por canales web encriptados de esta manera se garantiza que cuando se suban documentos sensibles como autorizaciones de menores o pasaportes, la información viaje protegida, evitando cualquier riesgo de que los datos sean interceptados por terceros.
+La conexión de la PDI y la SAG se utilizarán enlace directos y rápidos, junto con mensajes de texto livianos para consultar identidades, enviar formularios y recibir respuestas, esto permitirá a los fiscalizadores de frontera obtener confirmaciones instantáneas al escanear documentos evitando largas esperas.
+Para validar que el usuario existe nos conectaremos a los servidores del estado mediante un enlace de autorización estandarizado, con esta medida no guardan las contraseñas de los usuarios
+El sistema se enlazará con sistema de la Aduana de Argentina se hará por medio de una red privada, se creará un cable de conexión entre ambos países para compartir los datos vehiculares, al usar esta comunicación segura aseguramos el reconocimiento mutuo de los trámites automotrices cumpliendo las normativas de los países.
+3.2Requisitos funcionales
+El sistema deberá permitir a los usuarios iniciar sesión en la plataforma con su clave única, después de validar la identidad el usuario podrá cargar poderes notariales, registrar vehículos o completar declaraciones anticipadas, esto asegura que los trámites estén vinculados a un usuario evitando que existan perfiles falsos.
+Para validar la salida de un menor de edad o autorizar trámites aduaneros críticos, el sistema exigirá un proceso de seguridad en dos pasos. Primero, el funcionario deberá escanear el código de barras o QR de la cédula de identidad del titular en la caseta. Tras esta lectura, la plataforma enviará de forma automática un enlace único al correo electrónico del ciudadano, permitiéndole aplicar su firma digital desde su teléfono para aprobar definitivamente el permiso.
+El sistema debe proporcionar un módulo donde los apoderados puedan digitalizar y subir las autorizaciones para el viaje de menores antes de llegar a la frontera. El sistema permitirá adjuntar archivos en formato PDF, asociándose automáticamente al RUT del usuario y generando un folio de seguimiento. Esta funcionalidad adelanta el trabajo administrativo, permitiendo que la Policía de Investigaciones tenga el documento en pantalla apenas la familia llegue al control.
+El sistema deberá incluir un formulario interactivo para que los turistas completen su Declaración Jurada del Servicio Agrícola y Ganadero desde su celular. El usuario podrá marcar los productos de origen animal o vegetal que transporta y generar un comprobante electrónico. Al llegar a la frontera, esta información se transmitirá en tiempo real a las pantallas del SAG, eliminando por completo el uso de formularios de papel y agilizando la inspección.
+Durante el control de pasajeros, el sistema permitirá al funcionario consultar automáticamente las bases de datos migratorias. Al ingresar el RUT del viajero, la plataforma cruzará la información con la PDI para confirmar que no existan órdenes de arraigo y que los permisos estén aprobados. El software mostrará una alerta visual verde o roja en pantalla, indicando de forma clara y rápida si el cruce internacional está autorizado o rechazado.
+La plataforma debe contar con una función específica para procesar el tránsito de automóviles particulares hacia Argentina. El sistema requerirá que el conductor ingrese la patente del vehículo y validará electrónicamente si es el propietario legítimo. Una vez aprobados los datos, el software emitirá el formulario de "Salida y Admisión Temporal de Vehículos" en formato digital, enviando una copia a la aduana Argentina para su reconocimiento mutuo.
+Una vez que el ciudadano complete todos sus trámites obligatorios (permisos, declaración SAG y vehículo), el sistema consolidará esta información y emitirá un único código QR de viaje. Este código podrá ser guardado en el teléfono del turista y, al ser escaneado por el funcionario aduanero, desplegará en la pantalla todo el expediente del grupo familiar al instante, evitando tener que buscar y validar cada documento por separado.
+El sistema deberá registrar automáticamente qué funcionario de Aduanas, PDI o SAG aprobó cada etapa del cruce fronterizo. Cada vez que un fiscalizador autorice un paso o verifique un documento, el software guardará su código de usuario, la fecha y la hora exacta en la bitácora del viaje. Esta funcionalidad garantiza la trazabilidad total del proceso, permitiendo auditar posteriormente quién fue el responsable de autorizar cualquier salida del país.
+El software deberá contar con un módulo de mensajería que informe proactivamente a los ciudadanos sobre el avance de sus solicitudes. Cuando la PDI valide un poder notarial o Aduanas apruebe un vehículo, el sistema despachará automáticamente un correo confirmando que su trámite está "Aprobado" o indicando si fue "Rechazado" por algún error. Esto evita que los turistas lleguen a la frontera con documentos inválidos, reduciendo la congestión vehicular.
+El sistema deberá presentar interfaces de usuario distintas dependiendo del tipo de funcionario que inicie sesión en la caseta física. Si ingresa un agente del SAG, la pantalla priorizará las declaraciones juradas de alimentos; si entra un agente de la PDI, destacará el control de menores. Esta personalización asegura que cada institución acceda de forma rápida solo a los datos que le competen, optimizando los tiempos de atención.
+3.3Requisitos no funcionales
+3.3.1Requisitos de rendimiento
+La arquitectura del sistema debe ser  capaz de soportar un gran número de usuarios simultáneos sin que disminuya el rendimiento de la plataforma considerando el enorme volumen de pasajeros durante el verano o fines de semana largos, el sistema logrará procesar sin interrupciones miles de transacciones por minuto, como el envío de correos de doble autenticación o cruces de datos con PDI, esto garantizará que la plataforma no se caiga ni se ponga lenta en los momentos críticos.
+Para evitar aglomeraciones vehiculares en la frontera, el sistema deberá garantizar tiempos de respuesta extremadamente bajos durante las validaciones. Cuando el fiscalizador escanee la cédula del viajero o consulte el estado de una autorización de menores, la plataforma deberá conectarse con las bases de datos y mostrar el resultado en pantalla en un máximo de dos segundos. Esta rapidez operativa es crítica para asegurar que el flujo de atención se mantenga ágil y no genera cuellos de botella.
+3.3.2Seguridad
+El sistema para proteger los documentos sensibles del usuario como autorizaciones notariales de menores o  los datos extraídos de las cédulas, está información será guardada en servidores que tendrán un código criptográfico estándar AES-256 , mientras que su transmisión web estará blindada por el protocolo TLS 1.3. De esta forma si alguien intenta vulnerar la red fronteriza obtendrá códigos totalmente indescifrables, protegiendo así la privacidad de los usuarios.
+El sistema deberá tener un modelo de seguridad para bloquear cualquier intento de suplantación de identidad en la frontera, el proceso iniciará escaneando el código de barras de la cédula de identificación  del usuario, posteriormente el sistema enviará un token temporal y cifrado al correo electrónico del usuario para que aplique su firma digital. Este mecanismo asegura que solo el titular legítimo pueda aprobar la salida del país, haciendo imposible la falsificación de permisos.
+3.3.3Fiabilidad
+Para garantizar la continuidad del control fronterizo, el sistema deberá mantener un nivel de disponibilidad del 99.9%, operando las 24 horas del día. En términos de fiabilidad, esto establece que la plataforma no superará un límite máximo de tres incidentes de caída total permitidos por año. De esta forma, aseguramos que los fiscalizadores siempre tengan acceso al software para validar las identidades y los correos de doble autenticación, evitando que una falla técnica paralice el flujo internacional de vehículos.
+El tiempo medio entre fallos para los módulos críticos, como el envío de correos electrónicos transaccionales y la conexión con PDI o SAG, deberá ser estrictamente superior a las mil horas de operación continua. Si ocurre un incidente que interrumpa esta comunicación de red, el sistema deberá restablecerse y reconectar en menos de cinco minutos. Este factor de fiabilidad asegura que las desconexiones excepcionales sean breves y aisladas, sin impactar negativamente en los tiempos de espera de los viajeros.
+3.3.4Disponibilidad
+El sistema deberá garantizar una disponibilidad operativa del 99,9% durante todo el año, funcionando ininterrumpidamente las 24 horas del día, esto  asegura que la plataforma estará en línea casi sin tiempo de inactividad, permitiendo a los fiscalizadores validar los cruces y emitir las firmas digitales en cualquier momento De esta manera, se previenen bloqueos en los pasos aduaneros, garantizando que el flujo de vehículos no se detenga a causa de caídas en los servidores.
+Para cumplir con las medidas de disponibilidad, la arquitectura del software operará bajo un modelo de redundancia donde múltiples servidores de respaldo funcionarán simultáneamente, si un equipo físico llega a fallar, otro asumirá automáticamente la carga sin que el sistema deje de estar disponible en las pantallas. Esta estrategia garantiza que la lectura de cédulas y autorizaciones siga operando sin interrupciones, manteniendo la frontera totalmente activa incluso si ocurren problemas técnicos durante la temporada alta.
+3.3.5Mantenibilidad
+El mantenimiento del sistema se hará durante la madrugada, aprovechando el bajo tráfico vehicular. Además, el software generará automáticamente reportes estadísticos mensuales que detallarán el volumen de accesos y tiempos de respuesta, esto permitirá corregir errores de forma anticipada y ajustar la capacidad de la infraestructura tecnológica justo antes de enfrentar la temporada alta de usuarios.
+El sistema demandará un mantenimiento adaptativo enfocado en actualizar constantemente los protocolos de comunicación con las bases de datos del Registro Civil y la PDI. Estas modificaciones estructurales serán realizadas exclusivamente por ingenieros de infraestructura, quienes programarán las actualizaciones de forma trimestral durante la temporada de menor flujo migratorio. Al aplicar estos ajustes periódicos, el equipo renueva los certificados de encriptación y optimiza la lectura de documentos, preparando la plataforma para soportar la alta demanda del verano sin sufrir ralentizaciones.
+3.3.6Portabilidad
+El desarrollo del sistema se realizará utilizando lenguajes universales, como JavaScript bajo el entorno Node.js, y la librería React para la interfaz, con esto  garantizamos que el software pueda ejecutarse sin modificaciones tanto en los computadores de las casetas fronterizas como en los teléfonos móviles de los usuarios. Esto facilita enormemente su adaptación a cualquier tipo de pantalla y   sistema operativo sin necesidad de programar aplicaciones diferentes para cada dispositivo.
+Para asegurar el traslado ágil del sistema entre distintas infraestructuras del Estado, la totalidad de los componentes del servidor se empaquetan en contenedores virtuales utilizando Docker. Esta arquitectura aísla el programa, reduciendo prácticamente a cero el porcentaje de código dependiente de un sistema operativo específico. Así, si Aduanas decide migrar sus servidores físicos basados en Linux hacia una plataforma en la nube, el software completo podrá trasladarse y funcionar al instante sin escribir código.
+3.4Otros Requisitos
+La interfaz de usuario deberá ser desarrollada cumpliendo con los estándares internacionales de accesibilidad, específicamente las pautas WCAG.Esto asegura que la plataforma de trámites anticipados sea navegable para personas con discapacidades visuales o motoras. Al implementar contrastes adecuados y compatibilidad con lectores de pantalla, garantizamos que cualquier viajero pueda gestionar sus permisos y recibir su correo de autenticación de forma autónoma, sin enfrentar barreras tecnológicas excluyentes.
+El sistema deberá  cumplir con la normativa de privacidad.Toda la información capturada durante el escaneo de cédulas y los correos electrónicos de doble autenticación será catalogada como confidencial. El software exigirá que el usuario acepte explícitamente los términos de privacidad antes de generar su firma digital, asegurando que el Estado almacene y procese estos antecedentes sensibles únicamente con el fin exclusivo de fiscalización aduanera y migratoria.
+4. Propuesta de Planificación
+4.1 Descripción general acerca de la Planificación
+El proyecto se ejecutará en 6 meses por un equipo de 4 especialistas (Gestión, Desarrollo y Ciberseguridad) bajo metodología Scrum priorizando la interoperabilidad segura con el Registro Civil, PDI y SAG para reducir los tiempos de espera; siendo crítico para su éxito garantizar la estabilidad de las conexiones con la Aduana Argentina y el acceso técnico a las bases de datos institucionales.
+4.1.2 Definición del Equipo de Trabajo
+El equipo de trabajo está compuesto por un Project Manager, dos desarrolladores (Frontend y Backend) y un especialista en Ciberseguridad quienes colaborarán para transformar los procesos aduaneros manuales en una plataforma digital de alta velocidad. Mientras la gestión se enfoca en coordinar las integraciones críticas con el Registro Civil, PDI y SAG, el área técnica se encargará de construir una interfaz intuitiva con la identidad gráfica de Aduanas y asegurar que el intercambio de datos entre países sea cifrado y eficiente, garantizando así que los trámites pasen de horas a minutos con total fiabilidad.
+4.1.3 Definición de Actividades principales del Proyectos
+El proyecto se divide en cuatro etapas basadas en los estándares del PMI y la Ingeniería De Software: Análisis ($3.8M), Diseño ($6.1M), Desarrollo ($15M) y Pruebas ($6.4M), sumando un presupuesto total de $31.3M distribuido entre el Project Manager, desarrolladores (Backend/Frontend) y el especialista en Ciberseguridad. Este flujo de trabajo asegura la correcta integración con el Registro Civil, PDI y SAG, garantizando que la transición de trámites manuales a digitales sea segura y reduzca los tiempos de espera de horas a minutos mediante una ejecución técnica y administrativa rigurosa.
+4.1.4 Diagrama EDT
+La Estructura de Desglose del Trabajo (EDT) organiza el proyecto Frontera Ágil en fases, tareas, responsables, tiempos y costos de esfuerzo. Esta matriz permite controlar el alcance de la Evaluación Parcial 1 y sirve como base para la planificación técnica de la Evaluación Parcial 2. La información fue incorporada en la misma planilla del grupo, sin reemplazar su estructura original, agregando las hojas EDT, Carta Gantt y Resumen Costos.
+Figura 4.1.4. Extracto visual de la matriz EDT incorporada a la planilla original.
+Archivo asociado: Planilla_Formato_Extendido_COMPLETADA_Gantt_EDT.xlsx, hoja “EDT”.
+4.1.5 Carta Gantt
+La Carta Gantt presenta la distribución temporal de las actividades del proyecto por semanas, relacionando las fases de inicio, planificación, desarrollo, pruebas, despliegue y cierre. Su incorporación permite evidenciar duración, secuencia de trabajo y coordinación del equipo, manteniendo trazabilidad entre las actividades del EDT y los entregables técnicos del sistema.
+Figura 4.1.5. Carta Gantt integrada en la planilla del proyecto.
+Archivo asociado: Planilla_Formato_Extendido_COMPLETADA_Gantt_EDT.xlsx, hoja “Carta Gantt”.
+4.1.6 Resumen Costos del Desarrollo del Proyecto
+El resumen de costos se obtiene desde la matriz EDT y calcula el esfuerzo por hora hombre según rol profesional, sueldo referencial, tiempo estimado y costo por tarea. Este resumen permite justificar la planificación económica del desarrollo y vincularla con las fases del ciclo de vida del software.
+La versión editable y completa se encuentra en la hoja “Resumen Costos” de la planilla Excel revisada.
+Fase
+Horas estimadas
+Costo estimado
+Participación
+Inicio y Estrategia
+36
+$1.125.000
+4.3%
+Planificación y Diseño
+208
+$3.970.000
+15.2%
+Desarrollo
+800
+$14.087.500
+53.8%
+Pruebas y QA
+196
+$3.857.500
+14.7%
+Despliegue y Cierre
+87
+$3.153.125
+12.0%
+TOTAL
+1327
+$26.193.125
+100%
+4.2 Plan de Control de Cambio No aplica (no llenar)
+[Se recomienda primero describir los tipos de cambio que se podrán resolver y sus alcances]
+[Insertar Tabla de Control de Cambios]
+[ Obs.
+Insertar Descripción de los aspectos del desarrollo en los que se permitirá aplicar cambios como parte del Desarrollo del Software definiendo sus alcances y limitaciones asociadas.
+El control de cambios es una actividad paralela al desarrollo del proyecto que responde a eventos que surgen del mismo, sea por requerimientos propios del usuario o por mejoras o correcciones detectadas por el mismo equipo del proyecto.
+Se describe de manera independiente de las demás fases de la metodología pues puede ser aplicada indistintamente a proyectos en marcha o proyectos ya implementados, y porque es necesario resaltar su importancia y no relegarla como una actividad posterior al desarrollo, sino reconocerla como una actividad que debe estar definida, presente y es crítica desde el inicio del proyecto.  Deberá describir que tipo aspectos Funcionalidades y no funcionales se podrán modificar con cambio, en que instancia de proyecto se podrán aplicar y que motivos los validarían para ser aplicables y en qué caso no será posible aplicar cambios.
+Luego esto se debe complementar con la observación de que en el anexo encontrarán la Planilla de Control de Cambio con los Tipos de Cambio que podrán aplicarse en la cual posteriormente se debe completar la planilla al ejecutarse la instancia. ]
+5. Anexos
+5.1 Acta de Proyecto
+Insertar Acta de Constitución del Proyecto
+5.2 Matriz Especificación de Requerimientos
+Matriz en formato planilla sobre la especificación de Requerimientos con su identificador y columnas de datos correspondiente. RF1. O RNF.1
+5.3 Diagrama de Casos de Uso General
+El diagrama de casos de uso general representa la vista de escenarios del modelo 4+1. Muestra la interacción entre viajero, funcionario de Aduanas, administrador y organismos externos con las funciones principales del sistema.
+El diagrama de flujo del sistema Frontera Ágil muestra cómo un viajero realiza todos sus trámites fronterizos de forma digital y automatizada antes de cruzar la frontera.
+El proceso comienza cuando el ciudadano inicia sesión con Clave Única y valida su identidad mediante el QR de su cédula. Luego crea un expediente de viaje donde registra permisos de menores, declaración SAG y datos del vehículo. El sistema verifica automáticamente toda esta información conectándose con organismos externos como el Registro Civil de Chile, Policía de Investigaciones de Chile, Servicio Agrícola y Ganadero y la Dirección General de Aduanas de Argentina.
+Si todos los requisitos están correctos, el sistema genera un código QR único que el viajero presenta en la caseta fronteriza. El funcionario escanea el QR y el sistema consulta automáticamente posibles restricciones migratorias o judiciales. Si no existen problemas, se sincronizan los datos con la Aduana Argentina, se registra la auditoría y se autoriza el cruce fronterizo.
+El objetivo principal del sistema es reducir filas y tiempos de espera mediante automatización, integración entre instituciones y eliminación de trámites manuales en papel.
+Figura 5.3. Diagrama de casos de uso general de Frontera Ágil.
+Requisitos asociados: R.1 a R.10, especialmente autenticación, expediente digital, declaraciones, pase QR, control en caseta, trazabilidad y reportabilidad.
+5.4 Planilla Casos de Uso
+Este anexo complementa el diagrama general mediante flujos principales, alternativos, precondiciones, postcondiciones y requisitos asociados por caso.
+RF- 01
+Inicio de sesión con Clave Única
+Actores
+Primario: Viajero
+Secundario: Sistema de Autenticación del Estado.
+Objetivos asociados
+Modernizar los trámites fronterizos confirmando la identidad de los usuarios mediante clave única.
+Requerimientos asociados
+Integración con la Api de clave única y gestión de sesiones seguras mediante protocolos de seguridad.
+Descripción
+Permitir al usuario acceder a la plataforma de frontera ágil valorándose la identidad mediante clave única para evitar fraudes y suplantación de identidad.
+Pre-condición
+El usuario debe poseer una clave única y conocer sus credenciales
+Secuencia
+Normal
+Paso
+Acción
+1
+El viajero selecciona la opción "Ingresar con Clave Única".
+2
+El sistema se redirigirá al portal oficial de clave única.
+3
+El viajero ingresa  su rut y contraseña en el portal .
+4
+El sistema de clave única valida las credenciales y genera un token seguro.
+5
+El sistema Frontera Ágil  recibirá el token y dará acceso a la plataforma si es válido.
+Post-condición
+El usuario se encuentra usando la plataforma
+Excepciones
+Paso
+Acción
+3
+Si las credenciales son incorrectas el sistema le denegará el acceso al usuario y este deberá intentarlo de nuevo.
+2
+Sí el Api de autenticación sufre alguna caída el sistema deberá informarlo.
+Rendimiento
+Paso
+Cota de tiempo
+2
+La redirección a la pasarela no debe exceder los 3 segundos.
+4
+La validación del token debe procesarse en un máximo de 5 segundos.
+Frecuencia esperada
+Alta.
+Comentarios
+Es crítico asegurar un plan de contingencia o mensaje claro de mantenimiento si la API del Estado (Clave Única) sufre caídas, ya que esto detiene el 100% de los nuevos trámites en la plataforma.
+RF- 02.1
+Validación de Identidad por QR de Cédula
+Actores
+Primario: Viajero
+Objetivos asociados
+Asegurar que el viajero posee físicamente su documento de identidad vigente antes de permitir la creación de un pase.
+Requerimientos asociados
+La cámara del usuario y procesamiento de imágenes para decodificación del QR
+Descripción
+Confirmar la presencia física del documento de identidad escaneando el QR impreso en el reverso. Este paso añade seguridad para asegurar que la persona autenticada tiene el carnet original en su poder y no está usando datos robados.
+Pre-condición
+El usuario debe estar autenticado y poseer un dispositivo con cámara habilitada
+Secuencia
+Normal
+Paso
+Acción
+1
+El Sistema solicita permisos de acceso a la cámara.
+2
+El usuario enfoca el QR del reverso de su cédula frente al lente.
+3
+El Sistema captura la imagen y decodifica la información encriptada.
+4
+El Sistema compara el RUT extraído con el de la sesión para confirmar la coincidencia.
+Post-condición
+La identidad del documento se marca como "Verificada físicamente".
+Excepciones
+Paso
+Acción
+4
+Si el rut coincide se bloquea el avance por posible fraude documental.
+3
+Si el código no es legible se solicitará reintentarlo de nuevo con mejor iluminación o limpiando el lente de la cámara.
+Rendimiento
+Paso
+Cota de tiempo
+3
+La decodificación de la imagen no debe tardar más de 2 segundos.
+3
+Si excede los 8 segundos, se habilita una opción de contingencia manual.
+Frecuencia esperada
+Alta.
+Comentarios
+Hay que tener en cuenta que las cámaras de celulares de gama baja pueden tener problemas de autoenfoque; la librería WebRTC elegida por el Desarrollador Frontend debe ser altamente optimizada para dispositivos móviles antiguos.
+RF- 02.2
+Consulta de Órdenes de Arraigo
+Actores
+Primario: Sistema Frontera Ágil.
+Secundario: Sistema PDI
+Objetivos asociados
+automatizar la verificación de antecedentes legales para reducir la carga de trabajo
+Requerimientos asociados
+Conexión con base de datos y cifrado de datos sensibles
+Descripción
+Consultar de manera automatizada a las bases de la PDI si el viajero posee prohibiciones legales vigentes para abandonar el territorio nacional.
+Pre-condición
+El viajero debe estar registrado en una solicitud de tránsito vigente.
+Secuencia
+Normal
+Paso
+Acción
+1
+El Sistema envía de forma cifrada el rut del pasajero a la API de PDI.
+2
+PDI procesa la solicitud internamente en su base de datos de encargos.
+3
+PDI devuelve el estado legal actualizado (Apto/No Apto).
+4
+El Sistema registra el resultado y aprueba el control policial virtual.
+Post-condición
+El viajero no tiene cuentas pendientes con la justicia
+Excepciones
+Paso
+Acción
+3
+Si algún pasajero tiene alguna cuenta pendiente con la justicia el sistema lo bloqueará y emitirá una alerta silenciosa.
+3
+El sistema encola el rut para un reintento asíncrono posterior.
+Rendimiento
+Paso
+Cota de tiempo
+2
+El procesamiento en los servidores de PDI no debe superar los 2.5 segundos
+3
+Ante latencia mayor a 3 segundos, se libera la interfaz del usuario para evitar bloqueos.
+Frecuencia esperada
+Alta.
+Comentarios
+Dado que se maneja información legal muy sensible, el Especialista de Ciberseguridad debe asegurar que los logs del sistema no guarden los motivos del arraigo, cumpliendo estrictamente con la Ley de Protección de Datos Personales.
+RF- 02.3
+Validación de tutela y menores.
+Actores
+Primario: Viajero (Tutor).
+Secundario: Registro Civil / Notarías.
+Objetivos asociados
+Proteger a menores de edad verificando vínculos legales y autorizaciones notariales de viaje.
+Requerimientos asociados
+Establecer conexión con el API del Registro Civil y acceso digital a documentos notariales
+Descripción
+Se busca verificar el vínculo entre los adultos y los menores acompañantes, para automatizar la revisión de permisos y acelerar el proceso.
+Pre-condición
+Se ha ingresado el rut de un menor de edad como acompañante.
+Secuencia
+Normal
+Paso
+Acción
+1
+El Actor ingresa el rut del menor en el formulario de acompañantes.
+2
+El Sistema cruza la información con el Registro Civil para identificar a los padres.
+3
+El Sistema evalúa si ambos padres se encuentran presentes en el grupo de viaje o busca un permiso notarial digitalizado.
+4
+El Sistema aprueba la inclusión del menor tras validar los documentos.
+Post-condición
+El menor queda habilitado legalmente en el expediente de tránsito
+Excepciones
+Paso
+Acción
+4
+Si el sistema no encuentra la autorización Parental. Pedirá que se suba al sistema manualmente.
+2
+El sistema no autorizará la salida del menor hasta que un tutor legal esté presente.
+Rendimiento
+Paso
+Cota de tiempo
+2 y 4
+El cruce de datos debe completarse en menos de 4 segundos en total.
+Frecuencia esperada
+Media.
+Comentarios
+La validación de documentos notariales digitales aún está en vías de estandarización en el país, por lo que el sistema debe mantener siempre activa y fluida la opción de carga manual (fallback) para revisión humana.
+RF- 03
+Declaración Jurada Digital SAG.
+Actores
+Primario: Viajero.
+Secundario: Sistema SAG.
+Objetivos asociados
+Digitalizar la declaración de riesgos fitosanitarios para permitir una inspección física dirigida y eficiente.
+Requerimientos asociados
+Persistencia de datos de formularios extensos y generación de documentos digitales firmados.
+Descripción
+Reemplazar el formulario de papel tradicional por un registro digital interactivo donde el viajero declara si porta productos de origen animal o vegetal. Esta información permite al SAG perfilar el riesgo del pasajero de forma anticipada.
+Pre-condición
+El trámite de tránsito debe estar iniciado y el usuario identificado.
+Secuencia
+Normal
+Paso
+Acción
+1
+El viajero accede a la sección de la Declaración Jurada SAG.
+2
+El Sistema despliega el cuestionario interactivo con categorías de productos.
+3
+El viajero marca "Sí" o "No" según los artículos que porta en su equipaje.
+4
+El Sistema genera un resumen visual de la declaración para revisión.
+5
+El viajero firma digitalmente aceptando la responsabilidad legal de sus respuestas, para luego ser adjuntado en el expediente digital.
+Post-condición
+Formulario completado y declaración legalmente vinculante emitida.
+Excepciones
+Paso
+Acción
+3
+El sistema notifica al SAG si califica a una inspección física obligatoria.
+Rendimiento
+Paso
+Cota de tiempo
+2
+Soporte para auto-guardado local ante inestabilidad de red.
+3
+La validación del token debe procesarse en un máximo de 5 segundos.
+Frecuencia esperada
+Alta.
+Comentarios
+Se recomienda encarecidamente realizar pruebas de accesibilidad y usabilidad (UX) con personas mayores, ya que las interfaces del SAG suelen ser propensas a errores por confusión en las categorías de los alimentos.
+RF- 04
+Registro Aduanero de Vehículos.
+Actores
+Primario: Viajero
+Secundario: Registro de Vehículos (RVM).
+Objetivos asociados
+Validar la legalidad de salida del vehículo y simplificar la carga de datos técnicos mediante la patente.
+Requerimientos asociados
+Integración con el Registro de Vehículos Motorizados y lógica de validación de poderes notariales.
+Descripción
+Tramitar digitalmente la salida de un vehículo motorizado cruzando los datos con el Registro Civil. Certifica que el auto pertenece al conductor o cuenta con autorización notarial para cruzar fronteras.
+Pre-condición
+Haber seleccionado la modalidad de viaje "En Vehículo Particular"
+Secuencia
+Normal
+Paso
+Acción
+1
+El viajero ingresa la patente del automóvil.
+2
+El Sistema consulta al RVM por propiedad y posibles encargos por robo.
+3
+El Sistema autocompleta los datos técnicos del vehículo en el formulario.
+4
+El Sistema autocompleta los datos técnicos del vehículo en el formulario.
+5
+El viajero confirma los datos y el vehículo queda aprobado para el tránsito.
+Post-condición
+Vehículo vinculado exitosamente al pase de tránsito fronterizo.
+Excepciones
+Paso
+Acción
+3
+Si el vehículo es robado se frenará el proceso y se alertará a las fuerzas de seguridad .
+Rendimiento
+Paso
+Cota de tiempo
+3
+La consulta de patente debe resolverse en un máximo de 3 segundos.
+Frecuencia esperada
+Alta.
+Comentarios
+Para escalabilidad futura, considerar la integración de alertas tempranas sobre permisos de circulación y SOAP vencidos, lo que añadiría un gran valor a la fiscalización vehicular del país.
+RF- 05
+Emisión de Pase QR Unificado.
+Actores
+Primario: Sistema Frontera Ágil.
+Objetivos asociados
+Consolidar múltiples trámites en un único comprobante digital seguro para optimizar el control físico.
+Requerimientos asociados
+Algoritmos de criptografía para generación de Hash y librerías de renderizado de códigos QR.
+Descripción
+Compilar todos los trámites aprobados (identidad, PDI, SAG, Aduanas) y generar un único código QR seguro e intransferible. Este será el único documento que el viajero deberá exhibir físicamente en la caseta fronteriza.
+Pre-condición
+Todos los módulos obligatorios previos deben estar en estado "Aprobado".
+Secuencia
+Normal
+Paso
+Acción
+1
+El Sistema verifica que no existan campos pendientes en el checklist.
+2
+El Sistema genera un hash único asociando todos los datos del viaje.
+3
+El Sistema renderiza el Código QR en la pantalla del dispositivo del viajero.
+4
+El Sistema envía una notificación de éxito al correo del viajero.
+5
+El Sistema habilita la descarga del pase en formato PDF para uso offline.
+Post-condición
+Documento digital (Pase de Tránsito) emitido y disponible.
+Excepciones
+Paso
+Acción
+1
+Si el trámite está incompleto el botón de generación  de QR se mantiene inactivo.
+Rendimiento
+Paso
+Cota de tiempo
+5
+Priorización de visualización en pantalla ante fallas de descarga del PDF.
+3
+La generación del QR debe ser instantánea (menos de 1 segundo).
+Frecuencia esperada
+Alta.
+Comentarios
+El diseño de la App/Web debe considerar un script que aumente el brillo de la pantalla del celular automáticamente al mostrar el QR, para facilitar la lectura de las pistolas láser a través de las ventanas de los automóviles.
+RF- 06
+Sincronización binacional de datos.
+Actores
+Primario: Sistema Frontera Ágil.
+Secundario: Sistema de la aduana Argentina
+Objetivos asociados
+Establecer un control fronterizo integrado mediante el intercambio anticipado de información entre naciones.
+Requerimientos asociados
+Protocolos de comunicación segura mediante VPN y estandarización de datos en formato JSON.
+Descripción
+Enviar un paquete de datos seguros a los servidores argentinos al concretarse la salida de Chile. Esto permite a la aduana vecina tener los datos pre-cargados, evitando que el usuario deba dictarlos nuevamente.
+Pre-condición
+El funcionario en caseta chilena marcó el trámite como "Salida Efectiva".
+Secuencia
+Normal
+Paso
+Acción
+1
+El Sistema detecta la autorización física de salida en la base de datos nacional.
+2
+El Sistema compila la información relevante del viaje en un paquete cifrado.
+3
+El Sistema transmite los datos a los servidores de la aduana argentina.
+4
+Post-condición
+Datos de los viajeros disponibles en las terminales del país receptor.
+Excepciones
+Paso
+Acción
+3
+Si se corta el enlace con la aduana Argentina el sistema guardará los datos localmente e intentará de nuevo la conexión  con la aduana Argentina.
+Rendimiento
+Paso
+Cota de tiempo
+3
+El envío debe procesarse en menos de 2 segundos en segundo plano.
+Frecuencia esperada
+Alta.
+Comentarios
+La conectividad en la zona cordillerana es sumamente inestable; el desarrollo Backend debe priorizar una arquitectura "Offline First" para encolar el envío de datos binacionales sin bloquear la terminal del funcionario chileno.
+RF- 09
+Notificación automática al usuario.
+Actores
+Primario: Sistema Frontera Ágil.
+Secundario: Viajero.
+Objetivos asociados
+Mantener al usuario informado sobre su trámite y proveer respaldos digitales automáticos.
+Requerimientos asociados
+Integración con servidores SMTP corporativos y gestión de colas de envío de mensajes.
+Descripción
+Mantener al usuario informado sobre el progreso de su solicitud enviando correos electrónicos transaccionales. Asegurar que el viajero siempre tenga respaldo de su documentación ante posibles fallas de conexión en ruta.
+Pre-condición
+El viajero debe tener un correo electrónico validado.
+Secuencia
+Normal
+Paso
+Acción
+1
+El Sistema detecta un cambio de estado crítico "Pase Generado"
+2
+El motor de plantillas prepara el contenido del correo institucional.
+3
+El Sistema adjunta el Pase de Tránsito en formato PDF si corresponde.
+4
+El Sistema despacha el mensaje a través del servidor de correo.
+5
+El Sistema registra el log de envío para auditorías posteriores.
+Post-condición
+Usuario notificado y con respaldo en su bandeja de entrada.
+Excepciones
+Paso
+Acción
+4
+Si el servidor destino al correo electrónico falla se registrará el fallo y se intentará nuevamente.
+Rendimiento
+Paso
+Cota de tiempo
+4
+La conexión al servidor de correo no debe demorar más de 3 segundos.
+Frecuencia esperada
+Alta.
+Comentarios
+En fechas festivas (Ej. Fiestas Patrias) el volumen de correos se multiplicará por 10; el equipo técnico debe proporcionar un servicio de correos elástico y escalable (como AWS SES o SendGrid) para evitar saturaciones o caer en listas negras de Spam.
+RF- 09
+Control Físico y Autorización en Caseta.
+Actores
+Primario: Funcionario Fronterizo.
+Secundario: Viajero
+Objetivos asociados
+Finalizar el proceso legal de cruce fronterizo de forma rápida para lograr un alto nivel de flujo de viajeros en la frontera
+Requerimientos asociados
+Interfaz de usuario de alta velocidad (baja latencia) y compatibilidad con periféricos de escaneo láser.
+Descripción
+Proceso operativo final donde el funcionario escanea el QR del pasajero. El sistema consolida la información y asiste al funcionario para autorizar o denegar físicamente el levantamiento de la barrera.
+Pre-condición
+El Viajero presenta su código QR válido en la ventanilla.
+Secuencia
+Normal
+Paso
+Acción
+1
+El Funcionario utiliza el lector láser para escanear el QR del viajero.
+2
+El Sistema decodifica el hash y recupera la información del servidor central.
+3
+El Funcionario realiza la inspección visual de los ocupantes del vehículo.
+4
+El Funcionario presiona el botón de confirmación de paso en su terminal.
+5
+El Sistema cierra el trámite y registra la hora exacta del cruce legal.
+Post-condición
+El trámite se marca como "Cruce Completado" en el Registro Nacional.
+Excepciones
+Paso
+Acción
+3
+Si el funcionario lo considera necesario, puedes derivar al viajero a una revisión con el SAG
+2
+Si el QR expira o es adulterado el sistema se bloqueará y dará una alerta roja por pantalla.
+Rendimiento
+Paso
+Cota de tiempo
+2 y 3
+El despliegue de datos debe ser inferior a 1.5 segundos.
+Frecuencia esperada
+Alta.
+Comentarios
+El hardware de las casetas fronterizas suele estar desactualizado. La interfaz web del funcionario debe ser ultra-ligera, programada sin animaciones complejas, y testeada rigurosamente en monitores de baja resolución y condiciones de alta luminosidad natural.
+5.5 Prototipado de Software
+Para esta fase no se adjunta un prototipo navegable nuevo. El diseño arquitectónico se enfoca en modelamiento UML, vistas 4+1 y trazabilidad con requisitos; no obstante, la interfaz deberá respetar identidad visual institucional, accesibilidad y uso claro desde dispositivos móviles y terminales de caseta.
+5.6 Matriz EDT. Planilla Detallada Cálculo de Esfuerzo
+La matriz EDT detallada, la Carta Gantt y el resumen de costos fueron incorporados en la planilla Excel revisada, manteniendo las hojas originales “Instrucciones” y “Requerimiento Inicial”.Archivo asociado: Planilla_Formato_Extendido_COMPLETADA_Gantt_EDT.xlsx.
+5.7 Diagrama de Clases (Vista Lógica)
+La vista lógica describe las entidades principales del sistema, sus atributos, operaciones y relaciones. El modelo permite representar cómo el expediente de viaje consolida usuarios, permisos, declaraciones, vehículos, pase QR, auditoría e integraciones externas.
+Figura 5.7. Diagrama de clases de Frontera Ágil.
+Vista 4+1 asociada: vista lógica. Estándar UML aplicado: clases, atributos, operaciones, generalización, composición y asociaciones.
+5.8 Diagrama de Componentes (Vista de Desarrollo)
+La vista de desarrollo organiza el software en componentes desacoplados. Se separan presentación, API Gateway, seguridad, servicios de negocio, persistencia, mensajería, auditoría e integraciones externas, lo que facilita mantenibilidad, integración y pruebas por módulo.
+Figura 5.8. Diagrama de componentes de Frontera Ágil.
+Vista 4+1 asociada: vista de desarrollo. Estándar UML aplicado: componentes, dependencias, agrupación por capas y responsabilidades.
+5.9 Diagrama de Despliegue (Vista Física)
+La vista física muestra los nodos de infraestructura requeridos para operar el sistema en un contexto fronterizo. Considera dispositivos de viajeros, terminales de caseta, DMZ institucional, zona de aplicación, zona de datos y redes de organismos externos.
+Figura 5.9. Diagrama de despliegue de Frontera Ágil.
+Vista 4+1 asociada: vista física. Estándar UML aplicado: nodos, artefactos desplegados, canales de comunicación segura y dependencias de infraestructura.
+5.10 Diagrama de Actividades (Vista de Procesos)
+La vista de procesos representa el flujo operativo desde la autenticación del viajero hasta el cierre del expediente y la sincronización con organismos externos. Incluye decisiones de validación, corrección documental, generación de QR, control en caseta e inspección física cuando corresponda.
+Figura 5.10. Diagrama de actividades de Frontera Ágil.
+Vista 4+1 asociada: vista de procesos. Estándar UML aplicado: actividades, decisiones, flujos alternativos, inicio, cierre y control del proceso.
+5.11 Estándares de Calidad Aplicados al Diseño
+El diseño considera separación de responsabilidades, bajo acoplamiento, alta cohesión, trazabilidad, seguridad por capas, interoperabilidad mediante API segura, disponibilidad mediante componentes redundantes, mantenibilidad por servicios desacoplados y accesibilidad web. Estos criterios se alinean con los fundamentos de ingeniería de software y con la necesidad operacional del caso Aduanas: reducir tiempos de espera, evitar reprocesos documentales y proteger información personal.
+Aspecto evaluado
+Aplicación en el diseño
+Mantenibilidad
+La división por componentes permite modificar un módulo sin alterar todo el sistema. Por ejemplo, un cambio en la API SAG se resuelve en el servicio de integración sin afectar el Portal Ciudadano.
+Seguridad
+El API Gateway y el Servicio de Autenticación concentran control de sesión, tokens, MFA y autorización, reduciendo la exposición directa de los servicios internos.
+Interoperabilidad
+El componente de integración externa normaliza el intercambio con PDI, SAG, RVM, Registro Civil y Aduana Argentina mediante APIs seguras y datos estructurados.
+Fiabilidad
+La cola de mensajería permite reintentos cuando existen caídas de red o indisponibilidad temporal de sistemas externos.
+Requisito no funcional
+Decisión de despliegue que lo respalda
+Disponibilidad 99,9%
+Uso de balanceador de carga, instancias redundantes y separación entre zona de aplicación y zona de datos.
+Rendimiento en controles
+API Gateway redundante y servicios internos desplegados en contenedores para escalar según demanda en temporada alta.
+Seguridad y confidencialidad
+DMZ, WAF, TLS 1.3, VPN para Aduana Argentina, repositorios protegidos y separación de redes.
+Portabilidad
+Componentes backend empaquetados en Docker, reduciendo dependencia del sistema operativo y facilitando migraciones futuras.
+Fiabilidad ante conectividad inestable
+Broker de mensajería y worker de integración para reintentar sincronizaciones sin bloquear el control en caseta.
+Elemento del flujo
+Finalidad dentro del proceso
+Autenticación con Clave Única
+Evitar suplantación de identidad y asociar el trámite a un usuario verificable.
+Validaciones externas
+Reducir el trabajo manual en frontera mediante consultas anticipadas a PDI, SAG, RVM y sistemas binacionales.
+Código QR unificado
+Consolidar en un único comprobante la información del expediente y disminuir el tiempo de atención en caseta.
+Inspección condicional
+Permitir controles físicos cuando SAG, PDI o Aduanas detecten riesgo o requieran verificación adicional.
+Cierre auditable
+Registrar quién autorizó el cruce, cuándo lo hizo y qué resultado tuvo la sincronización binacional.
