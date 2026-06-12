@@ -135,6 +135,11 @@ function App() {
   const [help, setHelp] = React.useState(false);
 
   const go = (s) => { setScreen(s); window.scrollTo({ top: 0 }); };
+  const logout = () => {
+    setExp({ identidad: false, menores: false, vehiculo: false, sag: false });
+    setPase(null);
+    go('landing');
+  };
   const addBitacora = (b) => setBitacora(prev => [b, ...prev]);
 
   const isPortal = PORTAL.includes(screen);
@@ -146,6 +151,7 @@ function App() {
   switch (screen) {
     case 'landing': content = <Landing go={go} />; break;
     case 'claveunica': content = <ClaveUnica go={go} />; break;
+    case 'olvide-clave': content = <OlvideClave go={go} />; break;
     case 'inicio': content = <Inicio go={go} exp={exp} pase={pase} />; break;
     case 'identidad': content = <Identidad go={go} setExp={setExp} />; break;
     case 'menores': content = <Menores go={go} setExp={setExp} />; break;
@@ -161,8 +167,8 @@ function App() {
 
   return (
     <div className={'app' + (isConsole ? ' console' : '')} data-density={t.density} style={rootStyle}>
-      {isPortal && <PortalHeader go={go} onHelp={() => setHelp(true)} />}
-      {isConsole && <ConsoleHeader go={go} rol={rol} />}
+      {isPortal && <PortalHeader go={go} onHelp={() => setHelp(true)} onLogout={logout} />}
+      {isConsole && <ConsoleHeader go={go} rol={rol} onLogout={logout} />}
       {content}
       {help && <HelpModal onClose={() => setHelp(false)} />}
 

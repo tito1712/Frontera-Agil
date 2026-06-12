@@ -1,0 +1,4 @@
+{
+  "livePreview.autoRefreshPreview": "Never",
+  "liveServer.settings.ignoreFiles": ["**/*"]
+}

@@ -102,11 +102,17 @@ function Identidad({ go, setExp }) {
 /* ============================================================
    Menores (RF-02.3 tutela + autorización notarial)
    ============================================================ */
+const VINCULOS_MENOR = ['Hijo', 'Hija', 'Nieto', 'Nieta', 'Sobrino', 'Sobrina', 'Tutor/a legal'];
+
 function Menores({ go, setExp }) {
   const [step, setStep] = React.useState('add'); // add | vinculo | notarial | done
   const [folio] = React.useState('SAG-' + Math.floor(100000 + Math.random() * 800000));
   const [uploaded, setUploaded] = React.useState(false);
   const [checking, setChecking] = React.useState(false);
+  const [docNum, setDocNum] = React.useState(MENOR.rut);
+  const [nombre, setNombre] = React.useState(MENOR.nombre);
+  const [vinculo, setVinculo] = React.useState(MENOR.vinculo);
+  const [edad, setEdad] = React.useState(String(MENOR.edad));
 
   const buscarVinculo = () => {
     setChecking(true);
@@ -121,12 +127,35 @@ function Menores({ go, setExp }) {
       {step === 'add' && (
         <div className="card card-pad stack" style={{ gap: 20 }}>
           <h3 style={{ fontSize: '1.1rem' }}>Agregar acompañante menor de edad</h3>
+
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-            <div className="field"><label>RUT del menor</label><input className="input" defaultValue={MENOR.rut} /></div>
-            <div className="field"><label>Nombre completo</label><input className="input" defaultValue={MENOR.nombre} /></div>
-            <div className="field"><label>Vínculo</label><input className="input" defaultValue={MENOR.vinculo} /></div>
-            <div className="field"><label>Edad</label><input className="input" defaultValue={MENOR.edad + ' años'} /></div>
+            <div className="field">
+              <label>RUT del menor</label>
+              <input className="input mono" value={docNum}
+                placeholder="12.345.678-9"
+                onChange={e => setDocNum(formatRUT(e.target.value))}
+                maxLength={12} />
+            </div>
+            <div className="field">
+              <label>Nombre completo</label>
+              <input className="input" value={nombre} onChange={e => setNombre(e.target.value)} />
+            </div>
+            <div className="field">
+              <label>Vínculo</label>
+              <select className="input" value={vinculo} onChange={e => setVinculo(e.target.value)}>
+                {VINCULOS_MENOR.map(v => <option key={v} value={v}>{v}</option>)}
+              </select>
+            </div>
+            <div className="field">
+              <label>Edad</label>
+              <select className="input" value={edad} onChange={e => setEdad(e.target.value)}>
+                {Array.from({ length: 18 }, (_, i) => (
+                  <option key={i} value={String(i)}>{i} {i === 1 ? 'año' : 'años'}</option>
+                ))}
+              </select>
+            </div>
           </div>
+
           <div className="row" style={{ justifyContent: 'flex-end' }}>
             <button className="btn btn-primary" onClick={buscarVinculo} disabled={checking}>
               {checking ? <><Icon name="refresh" size={17} className="spin" /> Cruzando con Registro Civil…</> : <>Validar vínculo <Icon name="arrowR" size={17} /></>}

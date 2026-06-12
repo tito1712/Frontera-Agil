@@ -33,7 +33,7 @@ function QRCode({ seed = 'FA', size = 200, fg = '#11243f' }) {
 }
 
 /* ---------- shell del portal ---------- */
-function PortalHeader({ go, onHelp }) {
+function PortalHeader({ go, onHelp, onLogout }) {
   return (
     <header style={{ position: 'sticky', top: 0, zIndex: 30, background: 'oklch(1 0 0 / 0.85)', backdropFilter: 'blur(12px)', borderBottom: '1px solid var(--line)' }}>
       <div className="wrap row" style={{ height: 68, justifyContent: 'space-between' }}>
@@ -49,7 +49,7 @@ function PortalHeader({ go, onHelp }) {
             </div>
             <div style={{ width: 34, height: 34, borderRadius: '50%', background: 'var(--azul)', color: '#fff', display: 'grid', placeItems: 'center', fontWeight: 700, fontFamily: 'var(--font-display)' }}>LH</div>
           </div>
-          <button className="btn-quiet row" onClick={() => go('landing')} title="Salir" style={{ borderRadius: 999, padding: 9 }}><Icon name="logout" size={18} /></button>
+          <button className="btn-quiet row" onClick={onLogout} title="Salir" style={{ borderRadius: 999, padding: 9 }}><Icon name="logout" size={18} /></button>
         </div>
       </div>
     </header>
@@ -85,10 +85,33 @@ function SectionTitle({ kicker, title, desc, back, go }) {
 /* ============================================================
    1 · Clave Única (RF-01)
    ============================================================ */
+function DocTypeToggle({ value, onChange }) {
+  return (
+    <div className="row" style={{ gap: 0, border: '1.5px solid var(--line)', borderRadius: 10, overflow: 'hidden' }}>
+      {[['rut', 'RUT · Chile'], ['dni', 'DNI · Argentina']].map(([v, lbl]) => (
+        <button key={v} type="button" onClick={() => onChange(v)}
+          style={{ flex: 1, padding: '9px 0', fontWeight: 700, fontSize: '0.85rem', border: 0,
+            background: value === v ? 'var(--azul)' : 'transparent',
+            color: value === v ? '#fff' : 'var(--muted)',
+            borderLeft: v === 'dni' ? '1.5px solid var(--line)' : 0 }}>
+          {lbl}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 function ClaveUnica({ go }) {
-  const [run, setRun] = React.useState(VIAJERO.rut);
+  const [docType, setDocType] = React.useState('rut');
+  const [doc, setDoc] = React.useState(VIAJERO.rut);
   const [pass, setPass] = React.useState('••••••••••');
   const [loading, setLoading] = React.useState(false);
+
+  const handleDocType = (type) => {
+    setDocType(type);
+    setDoc(type === 'rut' ? VIAJERO.rut : '');
+  };
+
   const submit = (e) => {
     e.preventDefault();
     setLoading(true);
@@ -122,8 +145,15 @@ function ClaveUnica({ go }) {
             <p className="muted">Solo usuarios con cuenta habilitada pueden ingresar. No almacenamos tu contraseña.</p>
           </div>
           <div className="field">
-            <label>RUN</label>
-            <input className="input" value={run} onChange={e => setRun(e.target.value)} />
+            <label>Tipo de documento</label>
+            <DocTypeToggle value={docType} onChange={handleDocType} />
+          </div>
+          <div className="field">
+            <label>{docType === 'rut' ? 'RUT' : 'DNI'}</label>
+            <input className="input mono" value={doc}
+              placeholder={docType === 'rut' ? '12.345.678-9' : '12.345.678'}
+              onChange={e => setDoc(docType === 'rut' ? formatRUT(e.target.value) : formatDNI(e.target.value))}
+              maxLength={docType === 'rut' ? 12 : 10} />
           </div>
           <div className="field">
             <label>Contraseña</label>
@@ -136,7 +166,7 @@ function ClaveUnica({ go }) {
             {loading ? <><Icon name="refresh" size={18} className="spin" /> Validando token…</> : <>Continuar <Icon name="arrowR" size={18} /></>}
           </button>
           <div className="row" style={{ justifyContent: 'space-between' }}>
-            <button type="button" className="btn-quiet" style={{ fontSize: '0.86rem', color: 'var(--azul)' }}>¿Olvidaste tu clave?</button>
+            <button type="button" className="btn-quiet" style={{ fontSize: '0.86rem', color: 'var(--azul)' }} onClick={() => go('olvide-clave')}>¿Olvidaste tu clave?</button>
             <span className="row muted" style={{ gap: 6, fontSize: '0.78rem' }}><Icon name="lock" size={14} /> Conexión TLS 1.3</span>
           </div>
         </form>
@@ -262,4 +292,95 @@ function Inicio({ go, exp, pase }) {
   );
 }
 
-Object.assign(window, { QRCode, PortalHeader, Brand, SectionTitle, ClaveUnica, Inicio, TRAMITES });
+/* ============================================================
+   Olvidé mi Clave Única
+   ============================================================ */
+function OlvideClave({ go }) {
+  const [email, setEmail] = React.useState(VIAJERO.email);
+  const [loading, setLoading] = React.useState(false);
+  const [result, setResult] = React.useState(null); // null | 'ok' | 'notfound'
+
+  const submit = (e) => {
+    e.preventDefault();
+    if (!email) return;
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setResult(email.toLowerCase() === VIAJERO.email.toLowerCase() ? 'ok' : 'notfound');
+    }, 1600);
+  };
+
+  if (result === 'ok') {
+    return (
+      <div className="screen-in" style={{ minHeight: '100vh', display: 'grid', placeItems: 'center', padding: 24 }}>
+        <div className="card card-pad stack" style={{ maxWidth: 440, width: '100%', gap: 22, alignItems: 'center', textAlign: 'center' }}>
+          <div style={{ width: 80, height: 80, borderRadius: '50%', background: 'var(--ok-50)', color: 'var(--ok-700)', display: 'grid', placeItems: 'center', boxShadow: '0 0 0 10px var(--ok-50)' }}>
+            <Icon name="checkCircle" size={46} stroke={1.6} />
+          </div>
+          <div className="stack" style={{ gap: 8 }}>
+            <h2 style={{ fontSize: '1.55rem' }}>Correo enviado</h2>
+            <p className="muted">Enviamos las instrucciones para restablecer tu Clave Única a <strong style={{ color: 'var(--ink)' }}>{email}</strong>. Revisa tu bandeja de entrada y la carpeta de spam.</p>
+          </div>
+          <div className="stack" style={{ gap: 10, width: '100%' }}>
+            <button className="btn btn-primary btn-lg btn-block" onClick={() => go('claveunica')}>
+              Volver al inicio de sesión <Icon name="arrowR" size={18} />
+            </button>
+            <button type="button" className="btn-quiet" style={{ color: 'var(--muted)', fontSize: '0.86rem' }} onClick={() => { setResult(null); setLoading(false); }}>
+              ¿No llegó el correo? Reenviar
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="screen-in" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: 24 }}>
+      <div style={{ width: 'min(440px, 100%)' }}>
+        <button type="button" className="btn-quiet row" onClick={() => go('claveunica')} style={{ borderRadius: 999, gap: 6, color: 'var(--azul)', marginBottom: 28 }}>
+          <Icon name="arrowL" size={17} /> Volver al inicio de sesión
+        </button>
+        <div className="card card-pad stack" style={{ gap: 24 }}>
+          <div className="stack" style={{ gap: 8 }}>
+            <div style={{ width: 50, height: 50, borderRadius: 14, background: 'var(--azul-50)', color: 'var(--azul)', display: 'grid', placeItems: 'center', marginBottom: 4 }}>
+              <Icon name="key" size={26} />
+            </div>
+            <h2 style={{ fontSize: '1.6rem' }}>Recuperar Clave Única</h2>
+            <p className="muted">Ingresa el correo electrónico asociado a tu cuenta. Te enviaremos un enlace para crear una nueva contraseña.</p>
+          </div>
+          <form onSubmit={submit} className="stack" style={{ gap: 18 }}>
+            <div className="field">
+              <label>Correo electrónico</label>
+              <input
+                className="input"
+                type="email"
+                placeholder="tucorreo@ejemplo.cl"
+                value={email}
+                onChange={e => { setEmail(e.target.value); setResult(null); }}
+              />
+            </div>
+            {result === 'notfound' && (
+              <div className="row screen-in" style={{ gap: 10, padding: '12px 14px', borderRadius: 10, background: 'var(--warn-50)', border: '1px solid oklch(0.85 0.1 80)' }}>
+                <Icon name="alert" size={17} style={{ color: 'oklch(0.5 0.12 70)', flexShrink: 0 }} />
+                <span style={{ fontSize: '0.9rem', color: 'oklch(0.45 0.06 70)', fontWeight: 600 }}>No encontramos ninguna cuenta asociada a ese correo.</span>
+              </div>
+            )}
+            <button className="btn btn-primary btn-lg btn-block" disabled={loading || !email}>
+              {loading
+                ? <><Icon name="refresh" size={18} className="spin" /> Enviando instrucciones…</>
+                : <>Enviar instrucciones <Icon name="arrowR" size={18} /></>}
+            </button>
+          </form>
+          <p className="muted" style={{ fontSize: '0.8rem', textAlign: 'center' }}>
+            ¿Recuerdas tu contraseña?{' '}
+            <button type="button" className="btn-quiet" style={{ color: 'var(--azul)', fontWeight: 700, fontSize: '0.8rem', display: 'inline' }} onClick={() => go('claveunica')}>
+              Inicia sesión
+            </button>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+Object.assign(window, { QRCode, PortalHeader, Brand, SectionTitle, ClaveUnica, Inicio, TRAMITES, OlvideClave, DocTypeToggle });

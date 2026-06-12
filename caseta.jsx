@@ -7,7 +7,7 @@ function Clock() {
   return <span className="mono tnum">{p(t.getHours())}:{p(t.getMinutes())}:{p(t.getSeconds())}</span>;
 }
 
-function ConsoleHeader({ go, rol }) {
+function ConsoleHeader({ rol, onLogout }) {
   return (
     <header style={{ position: 'sticky', top: 0, zIndex: 30, background: 'oklch(0.18 0.025 262 / 0.92)', backdropFilter: 'blur(10px)', borderBottom: '1px solid var(--cline)' }}>
       <div className="wrap row" style={{ height: 66, justifyContent: 'space-between' }}>
@@ -31,7 +31,7 @@ function ConsoleHeader({ go, rol }) {
             </div>
             <div style={{ width: 32, height: 32, borderRadius: '50%', background: 'var(--rojo)', color: '#fff', display: 'grid', placeItems: 'center', fontWeight: 700, fontFamily: 'var(--font-display)', fontSize: '0.85rem' }}>SV</div>
           </div>
-          <button className="btn-quiet row" onClick={() => go('landing')} title="Salir" style={{ borderRadius: 999, padding: 9, color: 'var(--cmuted)' }}><Icon name="logout" size={18} /></button>
+          <button className="btn-quiet row" onClick={onLogout} title="Salir" style={{ borderRadius: 999, padding: 9, color: 'var(--cmuted)' }}><Icon name="logout" size={18} /></button>
         </div>
       </div>
     </header>

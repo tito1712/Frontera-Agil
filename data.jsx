@@ -82,4 +82,19 @@ const FUNCIONARIO = {
 
 const PASO = 'Los Libertadores · Chile → Argentina';
 
-Object.assign(window, { Icon, ICONS, VIAJERO, MENOR, VEHICULO, FUNCIONARIO, PASO });
+function formatRUT(v) {
+  const r = (v || '').replace(/[^0-9kK]/g, '').toUpperCase().slice(0, 9);
+  if (r.length <= 2) return r;
+  if (r.length <= 5) return r.slice(0, 2) + '.' + r.slice(2);
+  if (r.length <= 8) return r.slice(0, 2) + '.' + r.slice(2, 5) + '.' + r.slice(5);
+  return r.slice(0, 2) + '.' + r.slice(2, 5) + '.' + r.slice(5, 8) + '-' + r.slice(8);
+}
+
+function formatDNI(v) {
+  const r = (v || '').replace(/\D/g, '').slice(0, 8);
+  if (r.length <= 2) return r;
+  if (r.length <= 5) return r.slice(0, 2) + '.' + r.slice(2);
+  return r.slice(0, 2) + '.' + r.slice(2, 5) + '.' + r.slice(5);
+}
+
+Object.assign(window, { Icon, ICONS, VIAJERO, MENOR, VEHICULO, FUNCIONARIO, PASO, formatRUT, formatDNI });
