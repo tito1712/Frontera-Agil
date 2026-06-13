@@ -152,6 +152,7 @@ function App() {
     case 'landing': content = <Landing go={go} />; break;
     case 'claveunica': content = <ClaveUnica go={go} />; break;
     case 'olvide-clave': content = <OlvideClave go={go} />; break;
+    case 'crear-cuenta': content = <CrearCuenta go={go} />; break;
     case 'inicio': content = <Inicio go={go} exp={exp} pase={pase} />; break;
     case 'identidad': content = <Identidad go={go} setExp={setExp} />; break;
     case 'menores': content = <Menores go={go} setExp={setExp} />; break;

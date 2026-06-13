@@ -88,7 +88,7 @@ function SectionTitle({ kicker, title, desc, back, go }) {
 function DocTypeToggle({ value, onChange }) {
   return (
     <div className="row" style={{ gap: 0, border: '1.5px solid var(--line)', borderRadius: 10, overflow: 'hidden' }}>
-      {[['rut', 'RUT · Chile'], ['dni', 'DNI · Argentina']].map(([v, lbl]) => (
+      {[['rut', 'RUT · Chile'], ['dni', 'DNI extranjero']].map(([v, lbl]) => (
         <button key={v} type="button" onClick={() => onChange(v)}
           style={{ flex: 1, padding: '9px 0', fontWeight: 700, fontSize: '0.85rem', border: 0,
             background: value === v ? 'var(--azul)' : 'transparent',
@@ -105,6 +105,7 @@ function ClaveUnica({ go }) {
   const [docType, setDocType] = React.useState('rut');
   const [doc, setDoc] = React.useState(VIAJERO.rut);
   const [pass, setPass] = React.useState('••••••••••');
+  const [emailExt, setEmailExt] = React.useState('');
   const [loading, setLoading] = React.useState(false);
 
   const handleDocType = (type) => {
@@ -140,23 +141,36 @@ function ClaveUnica({ go }) {
       <div style={{ display: 'grid', placeItems: 'center', padding: 40 }}>
         <form onSubmit={submit} className="stack" style={{ width: 'min(420px, 100%)', gap: 22 }}>
           <div className="stack" style={{ gap: 8 }}>
-            <div className="chip chip-neutral" style={{ alignSelf: 'flex-start' }}><Icon name="key" size={15} /> Acceso seguro del Estado</div>
-            <h2 style={{ fontSize: '1.7rem' }}>Inicia sesión con tu Clave Única</h2>
+            {docType === 'rut'
+              ? <div className="chip chip-neutral" style={{ alignSelf: 'flex-start' }}><Icon name="key" size={15} /> Acceso seguro del Estado</div>
+              : <div className="chip chip-neutral" style={{ alignSelf: 'flex-start' }}><Icon name="globe" size={15} /> Portal Migraciones Chile</div>
+            }
+            <h2 style={{ fontSize: '1.7rem' }}>
+              {docType === 'rut' ? 'Inicia sesión con tu Clave Única' : 'Inicio de sesión extranjero'}
+            </h2>
             <p className="muted">Solo usuarios con cuenta habilitada pueden ingresar. No almacenamos tu contraseña.</p>
           </div>
           <div className="field">
             <label>Tipo de documento</label>
             <DocTypeToggle value={docType} onChange={handleDocType} />
           </div>
+          {docType === 'rut' ? (
+            <div className="field">
+              <label>RUT</label>
+              <input className="input mono" value={doc}
+                placeholder="12.345.678-9"
+                onChange={e => setDoc(formatRUT(e.target.value))}
+                maxLength={12} />
+            </div>
+          ) : (
+            <div className="field">
+              <label>Correo electrónico</label>
+              <input className="input" type="email" value={emailExt} placeholder="correo@ejemplo.com"
+                onChange={e => setEmailExt(e.target.value)} />
+            </div>
+          )}
           <div className="field">
-            <label>{docType === 'rut' ? 'RUT' : 'DNI'}</label>
-            <input className="input mono" value={doc}
-              placeholder={docType === 'rut' ? '12.345.678-9' : '12.345.678'}
-              onChange={e => setDoc(docType === 'rut' ? formatRUT(e.target.value) : formatDNI(e.target.value))}
-              maxLength={docType === 'rut' ? 12 : 10} />
-          </div>
-          <div className="field">
-            <label>Contraseña</label>
+            <label>{docType === 'rut' ? 'Clave Única' : 'Contraseña'}</label>
             <div style={{ position: 'relative' }}>
               <input className="input" type="password" value={pass} onChange={e => setPass(e.target.value)} style={{ paddingRight: 44 }} />
               <Icon name="eye" size={18} style={{ position: 'absolute', right: 14, top: 14, color: 'var(--muted)' }} />
@@ -165,6 +179,12 @@ function ClaveUnica({ go }) {
           <button className="btn btn-primary btn-lg btn-block" disabled={loading}>
             {loading ? <><Icon name="refresh" size={18} className="spin" /> Validando token…</> : <>Continuar <Icon name="arrowR" size={18} /></>}
           </button>
+          {docType === 'dni' && (
+            <div style={{ textAlign: 'center' }}>
+              <span className="muted" style={{ fontSize: '0.86rem' }}>¿No tenés cuenta? </span>
+              <button type="button" className="btn-quiet" style={{ fontSize: '0.86rem', color: 'var(--azul)', fontWeight: 700 }} onClick={() => go('crear-cuenta')}>Crear cuenta</button>
+            </div>
+          )}
           <div className="row" style={{ justifyContent: 'space-between' }}>
             <button type="button" className="btn-quiet" style={{ fontSize: '0.86rem', color: 'var(--azul)' }} onClick={() => go('olvide-clave')}>¿Olvidaste tu clave?</button>
             <span className="row muted" style={{ gap: 6, fontSize: '0.78rem' }}><Icon name="lock" size={14} /> Conexión TLS 1.3</span>
@@ -383,4 +403,150 @@ function OlvideClave({ go }) {
   );
 }
 
-Object.assign(window, { QRCode, PortalHeader, Brand, SectionTitle, ClaveUnica, Inicio, TRAMITES, OlvideClave, DocTypeToggle });
+/* ============================================================
+   Crear cuenta (DNI extranjero) — Migraciones Chile
+   ============================================================ */
+const PAISES_NACIMIENTO = ['Argentina','Bolivia','Brasil','Chile','Colombia','Ecuador','España','Estados Unidos','Francia','Italia','México','Paraguay','Perú','Portugal','Uruguay','Venezuela','Otro'];
+
+function CrearCuenta({ go }) {
+  const [form, setForm] = React.useState({ nombre: '', apellido1: '', apellido2: '', fechaNac: '', pais: '', sexo: '', email: '', emailConf: '', pass: '', passConf: '' });
+  const [captcha, setCaptcha] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const [done, setDone] = React.useState(false);
+  const [error, setError] = React.useState('');
+
+  const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
+
+  const submit = (e) => {
+    e.preventDefault();
+    if (form.email !== form.emailConf) { setError('Los correos no coinciden.'); return; }
+    if (form.pass !== form.passConf) { setError('Las contraseñas no coinciden.'); return; }
+    if (!captcha) { setError('Confirma que no eres un robot.'); return; }
+    setError('');
+    setLoading(true);
+    setTimeout(() => { setLoading(false); setDone(true); }, 1400);
+  };
+
+  if (done) {
+    return (
+      <div className="screen-in" style={{ minHeight: '100vh', display: 'grid', placeItems: 'center', padding: 24 }}>
+        <div className="card card-pad stack" style={{ maxWidth: 480, width: '100%', gap: 22, alignItems: 'center', textAlign: 'center' }}>
+          <div style={{ width: 80, height: 80, borderRadius: '50%', background: 'var(--ok-50)', color: 'var(--ok-700)', display: 'grid', placeItems: 'center', boxShadow: '0 0 0 10px var(--ok-50)' }}>
+            <Icon name="checkCircle" size={46} stroke={1.6} />
+          </div>
+          <div className="stack" style={{ gap: 8 }}>
+            <h2 style={{ fontSize: '1.55rem' }}>Cuenta creada</h2>
+            <p className="muted">Tu cuenta fue registrada con <strong style={{ color: 'var(--ink)' }}>{form.email}</strong>. Ya podés iniciar sesión.</p>
+          </div>
+          <button className="btn btn-primary btn-lg btn-block" onClick={() => go('claveunica')}>
+            Iniciar sesión <Icon name="arrowR" size={18} />
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="screen-in" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '40px 24px 60px' }}>
+      <div style={{ width: 'min(540px, 100%)' }}>
+        <button type="button" className="btn-quiet row" onClick={() => go('claveunica')} style={{ borderRadius: 999, gap: 6, color: 'var(--azul)', marginBottom: 28 }}>
+          <Icon name="arrowL" size={17} /> Volver al inicio de sesión
+        </button>
+
+        <div className="stack" style={{ gap: 6, alignItems: 'center', textAlign: 'center', marginBottom: 28 }}>
+          <div style={{ width: 56, height: 56, borderRadius: 14, background: 'var(--azul-50)', color: 'var(--azul)', display: 'grid', placeItems: 'center', marginBottom: 6 }}>
+            <Icon name="globe" size={28} />
+          </div>
+          <h2 style={{ fontSize: '1.75rem' }}>Migraciones Chile</h2>
+          <p className="muted" style={{ fontSize: '0.9rem' }}>Registra tus datos para crear una cuenta de acceso al portal de extranjeros.</p>
+        </div>
+
+        <div className="card card-pad">
+          <form onSubmit={submit} className="stack" style={{ gap: 16 }}>
+            <div className="field">
+              <label>Nombre <span style={{ color: 'var(--rojo)' }}>(*)</span></label>
+              <input className="input" value={form.nombre} placeholder="Tu nombre" onChange={e => set('nombre', e.target.value)} required />
+            </div>
+            <div className="field">
+              <label>Primer apellido <span style={{ color: 'var(--rojo)' }}>(*)</span></label>
+              <input className="input" value={form.apellido1} placeholder="Primer apellido" onChange={e => set('apellido1', e.target.value)} required />
+            </div>
+            <div className="field">
+              <label>Segundo apellido</label>
+              <input className="input" value={form.apellido2} placeholder="Segundo apellido (opcional)" onChange={e => set('apellido2', e.target.value)} />
+            </div>
+            <div className="field">
+              <label>Fecha de nacimiento <span style={{ color: 'var(--rojo)' }}>(*)</span></label>
+              <input className="input" type="date" value={form.fechaNac} onChange={e => set('fechaNac', e.target.value)} required />
+            </div>
+            <div className="field">
+              <label>País de nacimiento <span style={{ color: 'var(--rojo)' }}>(*)</span></label>
+              <select className="input" value={form.pais} onChange={e => set('pais', e.target.value)} required style={{ appearance: 'auto' }}>
+                <option value="">Selecciona País</option>
+                {PAISES_NACIMIENTO.map(p => <option key={p} value={p}>{p}</option>)}
+              </select>
+            </div>
+            <div className="field">
+              <label>Sexo <span style={{ color: 'var(--rojo)' }}>(*)</span></label>
+              <select className="input" value={form.sexo} onChange={e => set('sexo', e.target.value)} required style={{ appearance: 'auto' }}>
+                <option value="">Seleccione una opción</option>
+                <option value="M">Masculino</option>
+                <option value="F">Femenino</option>
+                <option value="O">Otro</option>
+                <option value="N">Prefiero no indicar</option>
+              </select>
+            </div>
+            <div className="field">
+              <label>Correo electrónico <span style={{ color: 'var(--rojo)' }}>(*)</span></label>
+              <input className="input" type="email" value={form.email} placeholder="correo@ejemplo.com" onChange={e => set('email', e.target.value)} required />
+            </div>
+            <div className="field">
+              <label>Confirmar correo electrónico <span style={{ color: 'var(--rojo)' }}>(*)</span></label>
+              <input className="input" type="email" value={form.emailConf} placeholder="correo@ejemplo.com" onChange={e => set('emailConf', e.target.value)} required />
+            </div>
+            <div className="field">
+              <label>Contraseña <span style={{ color: 'var(--rojo)' }}>(*)</span></label>
+              <input className="input" type="password" value={form.pass} placeholder="Mínimo 8 caracteres" onChange={e => set('pass', e.target.value)} required />
+            </div>
+            <div className="field">
+              <label>Confirmar contraseña <span style={{ color: 'var(--rojo)' }}>(*)</span></label>
+              <input className="input" type="password" value={form.passConf} placeholder="Repetí tu contraseña" onChange={e => set('passConf', e.target.value)} required />
+            </div>
+
+            <p style={{ color: 'var(--azul)', fontSize: '0.85rem', textAlign: 'center', margin: '4px 0' }}>
+              Los campos marcados con (*) son obligatorios
+            </p>
+
+            {/* reCAPTCHA simulado */}
+            <div style={{ border: '1px solid #d3d3d3', borderRadius: 4, padding: '14px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#f9f9f9', maxWidth: 300, margin: '0 auto', width: '100%', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
+              <div className="row" style={{ gap: 12 }}>
+                <input type="checkbox" checked={captcha} onChange={e => setCaptcha(e.target.checked)}
+                  style={{ width: 24, height: 24, cursor: 'pointer', accentColor: 'var(--azul)', flexShrink: 0 }} />
+                <span style={{ fontSize: '0.9rem', color: '#333' }}>No soy un robot</span>
+              </div>
+              <div className="stack" style={{ gap: 1, alignItems: 'center' }}>
+                <svg width="34" height="34" viewBox="0 0 64 64" fill="none">
+                  <path d="M32 4C16.5 4 4 16.5 4 32s12.5 28 28 28 28-12.5 28-28S47.5 4 32 4z" fill="#4A90D9"/>
+                  <path d="M32 11c-11.6 0-21 9.4-21 21s9.4 21 21 21 21-9.4 21-21-9.4-21-21-21z" fill="#E8F4FD"/>
+                  <path d="M23 26l9-15 9 15H23z" fill="#4A90D9"/>
+                  <path d="M15 40l8-14h9l-8 14H15z" fill="#2E6DA4"/>
+                  <path d="M33 40l8-14h9l-8 14H33z" fill="#4A90D9" opacity=".7"/>
+                </svg>
+                <span style={{ fontSize: '0.58rem', color: '#555', fontWeight: 600 }}>reCAPTCHA</span>
+                <span style={{ fontSize: '0.52rem', color: '#aaa' }}>Privacidad · Condiciones</span>
+              </div>
+            </div>
+
+            {error && <p style={{ color: 'var(--rojo)', fontSize: '0.88rem', margin: 0, textAlign: 'center' }}>{error}</p>}
+
+            <button className="btn btn-primary btn-lg btn-block" disabled={loading} style={{ marginTop: 4 }}>
+              {loading ? <><Icon name="refresh" size={18} className="spin" /> Creando cuenta…</> : <>Crear cuenta <Icon name="arrowR" size={18} /></>}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+Object.assign(window, { QRCode, PortalHeader, Brand, SectionTitle, ClaveUnica, Inicio, TRAMITES, OlvideClave, DocTypeToggle, CrearCuenta });
