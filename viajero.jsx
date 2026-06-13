@@ -88,7 +88,7 @@ function SectionTitle({ kicker, title, desc, back, go }) {
 function DocTypeToggle({ value, onChange }) {
   return (
     <div className="row" style={{ gap: 0, border: '1.5px solid var(--line)', borderRadius: 10, overflow: 'hidden' }}>
-      {[['rut', 'RUT · Chile'], ['dni', 'DNI extranjero']].map(([v, lbl]) => (
+      {[['rut', 'RUT · Chile'], ['dni', 'Inicio de sesión extranjero']].map(([v, lbl]) => (
         <button key={v} type="button" onClick={() => onChange(v)}
           style={{ flex: 1, padding: '9px 0', fontWeight: 700, fontSize: '0.85rem', border: 0,
             background: value === v ? 'var(--azul)' : 'transparent',
