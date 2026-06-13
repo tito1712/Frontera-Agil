@@ -186,7 +186,7 @@ function ClaveUnica({ go }) {
             </div>
           )}
           <div className="row" style={{ justifyContent: 'space-between' }}>
-            <button type="button" className="btn-quiet" style={{ fontSize: '0.86rem', color: 'var(--azul)' }} onClick={() => go('olvide-clave')}>¿Olvidaste tu clave?</button>
+            <button type="button" className="btn-quiet" style={{ fontSize: '0.86rem', color: 'var(--azul)' }} onClick={() => go('olvide-clave')}>¿Olvidaste tu contraseña?</button>
             <span className="row muted" style={{ gap: 6, fontSize: '0.78rem' }}><Icon name="lock" size={14} /> Conexión TLS 1.3</span>
           </div>
         </form>
@@ -365,7 +365,7 @@ function OlvideClave({ go }) {
             <div style={{ width: 50, height: 50, borderRadius: 14, background: 'var(--azul-50)', color: 'var(--azul)', display: 'grid', placeItems: 'center', marginBottom: 4 }}>
               <Icon name="key" size={26} />
             </div>
-            <h2 style={{ fontSize: '1.6rem' }}>Recuperar Clave Única</h2>
+            <h2 style={{ fontSize: '1.6rem' }}>Recuperar contraseña</h2>
             <p className="muted">Ingresa el correo electrónico asociado a tu cuenta. Te enviaremos un enlace para crear una nueva contraseña.</p>
           </div>
           <form onSubmit={submit} className="stack" style={{ gap: 18 }}>
