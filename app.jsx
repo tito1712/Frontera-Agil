@@ -52,15 +52,15 @@ function Landing({ go }) {
             <span className="row" style={{ gap: 8, color: 'var(--azul)', fontWeight: 700, marginTop: 'auto' }}>Ingresar con Clave Única <Icon name="arrowR" size={18} /></span>
           </button>
 
-          <button onClick={() => go('caseta-login')} className="card" style={{ textAlign: 'left', padding: 30, cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: 18, transition: 'transform .15s, box-shadow .15s', boxShadow: 'var(--sh)', background: 'linear-gradient(165deg, var(--azul-900), oklch(0.22 0.03 262))', borderColor: 'transparent' }}
+          <button onClick={() => go('caseta-login')} className="card" style={{ textAlign: 'left', padding: 30, cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: 18, transition: 'transform .15s, box-shadow .15s', boxShadow: 'var(--sh)' }}
             onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = 'var(--sh-lg)'; }}
             onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = 'var(--sh)'; }}>
-            <div style={{ width: 56, height: 56, borderRadius: 15, background: 'oklch(1 0 0 / 0.14)', color: '#fff', display: 'grid', placeItems: 'center' }}><Icon name="shield" size={28} /></div>
+            <div style={{ width: 56, height: 56, borderRadius: 15, background: 'var(--azul-50)', color: 'var(--azul)', display: 'grid', placeItems: 'center' }}><Icon name="shield" size={28} /></div>
             <div className="stack" style={{ gap: 7 }}>
-              <h2 style={{ fontSize: '1.5rem', color: '#fff' }}>Soy Fiscalizador</h2>
-              <p style={{ color: 'oklch(1 0 0 / 0.7)' }}>Escanea el Pase QR en la caseta, valida con PDI/SAG y autoriza el cruce con alerta verde o roja.</p>
+              <h2 style={{ fontSize: '1.5rem' }}>Soy Fiscalizador</h2>
+              <p className="muted">Escanea el Pase QR en la caseta, valida con PDI/SAG y autoriza el cruce con alerta verde o roja.</p>
             </div>
-            <span className="row" style={{ gap: 8, color: '#fff', fontWeight: 700, marginTop: 'auto' }}>Abrir consola de caseta <Icon name="arrowR" size={18} /></span>
+            <span className="row" style={{ gap: 8, color: 'var(--azul)', fontWeight: 700, marginTop: 'auto' }}>Abrir consola de caseta <Icon name="arrowR" size={18} /></span>
           </button>
         </div>
       </div>
@@ -167,7 +167,7 @@ function App() {
   }
 
   return (
-    <div className={'app' + (isConsole ? ' console' : '')} data-density={t.density} style={rootStyle}>
+    <div className="app" data-density={t.density} style={rootStyle}>
       {isPortal && <PortalHeader go={go} onHelp={() => setHelp(true)} onLogout={logout} />}
       {isConsole && <ConsoleHeader go={go} rol={rol} onLogout={logout} />}
       {content}
